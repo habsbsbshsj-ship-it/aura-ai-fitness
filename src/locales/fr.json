@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "dashboard": "Tableau de Bord",
+    "plan": "Plan",
+    "scan": "Scanner",
+    "coach": "Coach",
+    "profile": "Profil"
+  },
+  "dashboard": {
+    "daily_calories": "Calories Quotidiennes",
+    "water_tracker": "Suivi de l'Eau",
+    "add_meal": "Ajouter un Repas",
+    "hydration": "Hydratation"
+  },
+  "profile": {
+    "settings": "Paramètres",
+    "notifications": "Notifications",
+    "privacy": "Confidentialité et Sécurité",
+    "app_settings": "Paramètres de l'App",
+    "delete_data": "Supprimer mes Données",
+    "language": "Langue de l'Interface",
+    "sign_out": "Déconnexion"
+  },
+  "common": {
+    "continue": "Continuer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "reset": "Réinitialiser"
+  }
+}

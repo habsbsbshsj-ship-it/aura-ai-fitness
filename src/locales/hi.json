@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "dashboard": "डैशबोर्ड",
+    "plan": "योजना",
+    "scan": "स्कैन",
+    "coach": "कोच",
+    "profile": "प्रोफ़ाइल"
+  },
+  "dashboard": {
+    "daily_calories": "दैनिक कैलोरी",
+    "water_tracker": "वाटर ट्रैकर",
+    "add_meal": "खाना जोड़ें",
+    "hydration": "हाइड्रेशन"
+  },
+  "profile": {
+    "settings": "सेटिंग्स",
+    "notifications": "सूचनाएं",
+    "privacy": "गोपनीयता और सुरक्षा",
+    "app_settings": "ऐप सेटिंग्स",
+    "delete_data": "मेरा डेटा हटाएं",
+    "language": "इंटरफ़ेस भाषा",
+    "sign_out": "साइन आउट"
+  },
+  "common": {
+    "continue": "जारी रखें",
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "reset": "रीसेट"
+  }
+}

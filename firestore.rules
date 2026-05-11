@@ -1,0 +1,96 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) { 
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email']) &&
+             data.uid is string && data.uid.size() <= 128 &&
+             data.email is string && data.email.size() <= 256 &&
+             (data.get('displayName', '') is string) &&
+             (data.get('photoURL', '') is string);
+    }
+
+    function isValidMeal(data) {
+      let requiredFields = ['name', 'calories', 'protein', 'mealType', 'timestamp', 'date'];
+      return data.keys().hasAll(requiredFields) &&
+             data.name is string && data.name.size() <= 100 &&
+             data.calories is number &&
+             data.protein is number &&
+             (data.get('carbs', 0) is number) &&
+             (data.get('fats', 0) is number) &&
+             data.mealType in ['breakfast', 'lunch', 'dinner', 'snack'] &&
+             data.date is string && data.date.size() <= 20;
+    }
+
+    function isValidWater(data) {
+      return data.keys().hasAll(['amount', 'timestamp', 'date']) &&
+             data.amount is number &&
+             data.date is string && data.date.size() <= 20;
+    }
+
+    function isValidSettings(data) {
+      return data.keys().hasAll(['notifications', 'privacy', 'app']) &&
+             data.notifications is map &&
+             data.privacy is map &&
+             data.app is map;
+    }
+
+    // App Settings
+    match /settings/{userId} {
+      allow get: if isOwner(userId);
+      allow create, update: if isOwner(userId) && isValidSettings(incoming());
+    }
+
+    // User Profile
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidUser(incoming()) && incoming().uid == request.auth.uid;
+      allow update: if isOwner(userId) && isValidUser(incoming()) && incoming().uid == existing().uid;
+        
+      // Subcollections
+      match /meals/{mealId} {
+        allow list, get: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidMeal(incoming());
+        allow update: if isOwner(userId) && isValidMeal(incoming());
+        allow delete: if isOwner(userId);
+      }
+      
+      match /water/{logId} {
+        allow list, get: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidWater(incoming());
+        allow update: if isOwner(userId) && isValidWater(incoming());
+        allow delete: if isOwner(userId);
+      }
+      
+      match /daily_stats/{date} {
+        allow get, list: if isOwner(userId);
+        allow create, update: if isOwner(userId);
+      }
+      
+      match /plans/{planId} {
+        allow list, get: if isOwner(userId);
+        allow create: if isOwner(userId);
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Aura AI Fitness",
+  "description": "Premium AI-powered fitness and nutrition coach with food scanning, personalized diet plans, and real-time health tracking.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "AI Vision",
+    "Nutrition Tracking",
+    "Fitness Planning"
+  ]
+}

@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+@theme {
+  --color-neon-green: #39FF14;
+  --color-neon-green-glow: rgba(57, 255, 20, 0.4);
+  --color-electric-blue: #00E5FF;
+  --color-dark-surface: #121212;
+  --color-dark-card: #1E1E1E;
+  
+  --font-sans: "Geist Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+
+  /* Shadcn Overrides */
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  
+  --color-card: #121212;
+  --color-card-foreground: #ffffff;
+  
+  --color-popover: #121212;
+  --color-popover-foreground: #ffffff;
+  
+  --color-primary: #39FF14;
+  --color-primary-foreground: #000000;
+  
+  --color-secondary: #1E1E1E;
+  --color-secondary-foreground: #ffffff;
+  
+  --color-muted: #1E1E1E;
+  --color-muted-foreground: #a1a1aa;
+  
+  --color-accent: #1E1E1E;
+  --color-accent-foreground: #ffffff;
+  
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-input: rgba(255, 255, 255, 0.1);
+  --color-ring: #39FF14;
+
+  --radius-lg: 1rem;
+  --radius-md: 0.75rem;
+  --radius-sm: 0.5rem;
+}
+
+@layer base {
+  body {
+    @apply bg-black text-white font-sans antialiased selection:bg-neon-green/30;
+    margin: 0;
+    touch-action: pan-x pan-y;
+    overscroll-behavior: none;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html {
+    touch-action: pan-x pan-y;
+    overscroll-behavior: none;
+  }
+}
+
+@utility glass {
+  @apply bg-white/5 backdrop-blur-md border border-white/10;
+}
+
+@utility neo-glow {
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+}
+
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@utility glass-card {
+  @apply bg-white/[0.03] backdrop-blur-lg border border-white/5;
+}
+
+@utility shadow-glow {
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    &:hover {
+      background: rgba(57, 255, 20, 0.3);
+    }
+  }
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility no-zoom {
+  touch-action: none;
+}
+
+@layer base {
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    height: 4px;
+  }
+
+  input[type="range"]::-moz-range-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    height: 4px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -6px; /* Centers thumb on the 4px track */
+    background-color: currentColor;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px currentColor;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    border: none;
+    border-radius: 50%;
+    background-color: currentColor;
+    height: 16px;
+    width: 16px;
+    box-shadow: 0 0 10px currentColor;
+  }
+}
+
+@utility animate-ping-slow {
+  animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@utility animate-ping-slow-delay {
+  animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+  animation-delay: 1.5s;
+}
+
+@utility pulse-glow {
+  animation: pulse-glow 2s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  from { box-shadow: 0 0 10px rgba(57, 255, 20, 0.1); }
+  to { box-shadow: 0 0 25px rgba(57, 255, 20, 0.4); }
+}
+
+@keyframes ping-slow {
+  0% { transform: scale(1); opacity: 0.8; }
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+@utility gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-neon-green to-electric-blue;
+}
+
+@utility shimmer {
+  @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@import "tw-animate-css";
+@import "@fontsource-variable/geist";

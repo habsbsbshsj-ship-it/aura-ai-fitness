@@ -1,0 +1,121 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User personal details and fitness goals",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "age": { "type": "number" },
+        "height": { "type": "number", "description": "in cm" },
+        "weight": { "type": "number", "description": "in kg" },
+        "goal": { "type": "string", "enum": ["fat_loss", "muscle_gain", "maintenance"] },
+        "activityLevel": { "type": "string", "enum": ["sedentary", "light", "moderate", "active", "very_active"] },
+        "dietType": { "type": "string", "enum": ["anything", "vegetarian", "vegan", "keto", "paleo"] },
+        "targetCalories": { "type": "number" },
+        "targetProtein": { "type": "number" },
+        "targetWater": { "type": "number", "description": "in ml" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Meal": {
+      "title": "Meal Log",
+      "description": "Logged food items with nutritional breakdown",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "calories": { "type": "number" },
+        "protein": { "type": "number" },
+        "carbs": { "type": "number" },
+        "fat": { "type": "number" },
+        "fiber": { "type": "number" },
+        "sugar": { "type": "number" },
+        "imageUrl": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "mealType": { "type": "string", "enum": ["breakfast", "lunch", "dinner", "snack"] }
+      }
+    },
+    "WaterLog": {
+      "title": "Water Intake",
+      "description": "Individual water consumption records",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "amount": { "type": "number", "description": "in ml" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    },
+    "DietPlan": {
+      "title": "AI Diet Plan",
+      "description": "AI generated weekly or daily diet plans",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "plan": { "type": "object" },
+        "caloriesTarget": { "type": "number" },
+        "proteinTarget": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "AppSettings": {
+      "title": "Application Settings",
+      "description": "User preferences for units, language, and AI style",
+      "type": "object",
+      "properties": {
+        "notifications": {
+          "type": "object",
+          "properties": {
+            "waterReminder": { "type": "boolean" },
+            "mealReminder": { "type": "boolean" },
+            "workoutReminder": { "type": "boolean" },
+            "aiCoachTips": { "type": "boolean" },
+            "reminderTime": { "type": "string" }
+          }
+        },
+        "privacy": {
+          "type": "object",
+          "properties": {
+            "marketingEmails": { "type": "boolean" },
+            "analytics": { "type": "boolean" }
+          }
+        },
+        "app": {
+          "type": "object",
+          "properties": {
+            "units": { "type": "string", "enum": ["metric", "imperial"] },
+            "theme": { "type": "string" },
+            "language": { "type": "string" },
+            "aiStyle": { "type": "string", "enum": ["motivational", "technical", "friendly"] }
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "users": {
+      "schema": "User",
+      "description": "Root collection for user profiles"
+    },
+    "settings": {
+      "schema": "AppSettings",
+      "description": "User specific app configurations"
+    },
+    "users/{userId}/meals": {
+      "schema": "Meal",
+      "description": "User's individual meal logs"
+    },
+    "users/{userId}/water": {
+      "schema": "WaterLog",
+      "description": "User's water intake history"
+    },
+    "users/{userId}/plans": {
+      "schema": "DietPlan",
+      "description": "History of AI suggestions"
+    }
+  }
+}
